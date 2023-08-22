@@ -1,6 +1,8 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import html2canvas from 'html2canvas';
+import Head from 'next/head';
 
 export default function Home() {
   const [inputName, setInputName] = useState('unaivan');
@@ -9,6 +11,12 @@ export default function Home() {
 
   const [imageSrcAndroid, setImageSrcAndroid] = useState('./android.png');
   const [imageSrciOS, setImageSrciOS] = useState('./ios.png');
+
+  const [imageDataURLIos, setImageDataURLIos] = useState(null);
+  const divRefIos = useRef(null);
+
+  const [imageDataURLAndroid, setImageDataURLAndroid] = useState(null);
+  const divRefAndroid = useRef(null);
 
   const handleInputChangeName = (e) => {
     setInputName(e.target.value);
@@ -30,7 +38,8 @@ export default function Home() {
 
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    hour12: false
   });
 
 
@@ -44,8 +53,30 @@ export default function Home() {
     }
   };
 
+  const convertToImageIos = () => {
+    if (divRefIos.current) {
+      html2canvas(divRefIos.current).then(canvas => {
+        setImageDataURLIos(canvas.toDataURL('image/png'));
+      });
+    }
+  };
+
+  const convertToImageAndroid = () => {
+    if (divRefAndroid.current) {
+      html2canvas(divRefAndroid.current).then(canvas => {
+        setImageDataURLAndroid(canvas.toDataURL('image/png'));
+      });
+    }
+  };
+  
+
   return (
     <div className='container mx-auto py-16 px-12 '>
+      <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
+      </Head>
       <section className='grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 xs:grid-cols-1 gap-x-4 bg-white min-h-screen rounded-xl'>
         <div className='mx-auto p-12 space-y-6'>
         <p>{formattedTime}</p>
@@ -90,7 +121,7 @@ export default function Home() {
           </div>
         </div>
         <div className='mx-auto p-12'>
-          <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+          <div ref={divRefIos} class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
               <div class="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
               <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
               <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
@@ -112,12 +143,12 @@ export default function Home() {
                   <img src={imageSrciOS} class="w-[272px] h-[572px]" alt="" />
               </div>
           </div>
-          <div className='my-4'>
-            <button className='px-4 py-2 w-full rounded-xl font-base transition ease-in-out delay-150 bg-zinc-800 hover:scale-110 hover:bg-zinc-900 duration-300 text-white'>Download Image</button>
+          <div className='my-4 text-center'>
+            <a href={imageDataURLIos} onClick={convertToImageIos} download="converted_ios.png"  className='pointer px-4 py-2 w-full rounded-xl font-base transition ease-in-out delay-150 bg-zinc-800 hover:scale-110 hover:bg-zinc-900 duration-300 text-white'>Download Image</a>
           </div>
         </div>
-        <div className='mx-auto p-12'>
-          <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+        <div id='androidOS' className='mx-auto p-12'>
+          <div ref={divRefAndroid}  class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
               <div class="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
               <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
               <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
@@ -139,8 +170,9 @@ export default function Home() {
                   <img src={imageSrcAndroid} class="w-[272px] h-[572px]" alt="" />
               </div>
           </div>
-          <div className='my-4'>
-            <button className='px-4 py-2 w-full rounded-xl font-base transition ease-in-out delay-150 bg-zinc-800 hover:scale-110 hover:bg-zinc-900 duration-300 text-white'>Download Image</button>
+          <div className='my-4 text-center'>
+            {/* <button className='px-4 py-2 w-full rounded-xl font-base transition ease-in-out delay-150 bg-zinc-800 hover:scale-110 hover:bg-zinc-900 duration-300 text-white'>Download Image</button> */}
+            <a href={imageDataURLAndroid} onClick={convertToImageAndroid} download="converted_android.png"  className='pointer px-4 py-2 w-full rounded-xl font-base transition ease-in-out delay-150 bg-zinc-800 hover:scale-110 hover:bg-zinc-900 duration-300 text-white'>Download Image</a>
           </div>
         </div>
       </section>
