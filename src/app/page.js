@@ -71,7 +71,7 @@ export default function Home() {
   
 
   return (
-    <div className='container mx-auto py-16 px-12 '>
+    <div className='container mx-auto py-8 px-2 2xl:px-12 xl:px-12 md:px-12 sm:px-4 xs:px-4 '>
       <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -86,7 +86,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h5 className='font-bold text-zinc-900'>Custom Wallpaper</h5>
+            <h5 className='font-bold text-zinc-900 mb-2'>Custom Wallpaper</h5>
             <form>
               <label for="file-input" className="sr-only">Choose file</label>
               <input onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg"  name="file-input"  className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-zinc-500 focus:ring-blue-500
@@ -97,7 +97,7 @@ export default function Home() {
           </div>
 
           <div>
-            <p className='font-bold text-zinc-900'>Name :</p>
+            <p className='font-bold text-zinc-900 mb-1'>Name :</p>
             {/* <h1>{inputName}</h1>
             <h1>{inputName}</h1> */}
             <input
@@ -109,7 +109,7 @@ export default function Home() {
             />
           </div>
           <div>
-            <p className='font-bold text-zinc-900'>Amount :</p>
+            <p className='font-bold text-zinc-900 mb-1'>Amount :</p>
             {/* <h1>{inputAmount}</h1> */}
             <input
               type="text"
@@ -140,7 +140,7 @@ export default function Home() {
                 {/* <p className='text-uxs text-white font-light mt-56 text-center'>{inputName}</p> */}
               </div>
               <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-                  <img src={imageSrciOS} class="w-[272px] h-[572px]" alt="" />
+                  <img src={imageSrciOS} class="w-[272px] h-[572px] object-cover" alt="" />
               </div>
           </div>
           <div className='my-4 text-center'>
@@ -167,7 +167,7 @@ export default function Home() {
                 <p className='text-uxs text-white font-light mt-56 text-center'>{inputName}</p>
               </div>
               <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-                  <img src={imageSrcAndroid} class="w-[272px] h-[572px]" alt="" />
+                  <img src={imageSrcAndroid} class="w-[272px] h-[572px] object-cover" alt="" />
               </div>
           </div>
           <div className='my-4 text-center'>
